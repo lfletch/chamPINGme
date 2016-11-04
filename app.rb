@@ -21,25 +21,35 @@ end
 post '/purchase' do
   # put form data into variables
   token = params[:stripeToken]
-  # product_id = params[:product_id].to_i
-  product_id = params[:product_id]
-  p :hello, params[:product_ids]
+  product_id = params[:product_id].to_i
+  product_ids = params[:product_ids].split(',')
+  product_ids_i = product_ids.map(&:to_i)
   customer_email = params[:email]
-  p product_id
+  p product_ids_i
   p params
 
+  # find price for each product
+  price = 0
+  product_ids_i.each do |product|
+    db = SQLite3::Database.new("store.db")
+    db.results_as_hash = true
+    product = db.execute("SELECT * from OFFERINGS where id=?", product_id).last
+    price += product['price']
+  end
+p price
+
   # look up price of product
-  db = SQLite3::Database.new("store.db")
-  db.results_as_hash = true
-  product = db.execute("SELECT * from OFFERINGS where id=?", product_id).last
-  price = product['price']
+  # db = SQLite3::Database.new("store.db")
+  # db.results_as_hash = true
+  # product = db.execute("SELECT * from OFFERINGS where id=?", product_id).last
+  # price = product['price']
 
   # create the charge
   charge = Stripe::Charge.create(
-    :amount => price,
-    :currency => "usd",
-    :source => token,
-    :description => customer_email
+  :amount => price,
+  :currency => "usd",
+  :source => token,
+  :description => customer_email
   )
 
   # print the charge to the server console
