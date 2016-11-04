@@ -83,7 +83,7 @@
         <!-- loop begins -->
         <% @products.each do |product| %>
         <p>
-          <%= product['name'].capitalize %> ($<%= product['price']/100 %>)
+          <%= product['product'].capitalize %> ($<%= product['price']/100 %>)
           <input type="radio" name="product_id"
           value= "<%= product['id'] %>">
         </p>
