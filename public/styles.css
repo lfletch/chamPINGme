@@ -1,0 +1,8 @@
+#body {
+  border: 5px outset purple;
+  border-radius: 50px;
+  background-image: url(sparkle.gif);
+  cursor: url(spooky_ghost.gif), auto;
+  text-decoration: wavy;
+  text-shadow: 1px 1px 2px white; 
+}
