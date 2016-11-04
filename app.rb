@@ -4,6 +4,7 @@ require 'stripe'
 require 'sqlite3'
 
 Stripe.api_key = $PRIVATE_STRIPE_TEST_KEY
+set :public_folder, 'public'
 
 # home page route
 get '/' do
