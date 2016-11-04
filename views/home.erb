@@ -13,6 +13,25 @@
   <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 
   <script type="text/javascript">
+
+  $(function() {
+    var $form = $('#payment-form');
+    $form.submit(function(event) {
+      var checked = [];
+      $form.find('input[type=checkbox]:checked').each(function(i, input){
+         var $input = $(input);
+         checked.push($input.val())
+      });
+      $('#product_ids').val(checked.join(','));
+      return false;
+    });
+  });
+
+
+
+  </script>
+
+  <script type="text/javascript">
   Stripe.setPublishableKey('pk_test_A1dTVtMH5G1NFFOsLa9l4O4r');
 
   $(function() {
@@ -26,7 +45,7 @@
 
       // Prevent the form from being submitted:
       return false;
-    });
+    }); 
   });
 
   function stripeResponseHandler(status, response) {
@@ -61,6 +80,8 @@
 
 
   <form action="/purchase" method="POST" id="payment-form">
+    <input type="hidden" id="product_ids" name="product_ids" />
+
     <span class="payment-errors"></span>
 
     <div class="form-row">
@@ -84,8 +105,8 @@
         <% @products.each do |product| %>
         <p>
           <%= product['product'].capitalize %> ($<%= product['price']/100 %>)
-          <input type="radio" name="product_id"
-          value= "<%= product['id'] %>">
+          <input type="checkbox" name="product_id"
+          value= "<%=product['id']%>">
         </p>
         <% end %>
         <!-- loop ends -->

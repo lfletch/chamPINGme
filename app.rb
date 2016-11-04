@@ -21,7 +21,9 @@ end
 post '/purchase' do
   # put form data into variables
   token = params[:stripeToken]
-  product_id = params[:product_id].to_i
+  # product_id = params[:product_id].to_i
+  product_id = params[:product_id]
+  p :hello, params[:product_ids]
   customer_email = params[:email]
   p product_id
   p params
