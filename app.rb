@@ -11,7 +11,7 @@ get '/' do
   # on our store page eventually
   db = SQLite3::Database.new("store.db")
   db.results_as_hash = true
-  @products = db.execute("SELECT * from PRODUCTS")
+  @products = db.execute("SELECT * from OFFERINGS")
 
   erb :home
 end
