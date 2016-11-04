@@ -36,13 +36,6 @@ post '/purchase' do
     product = db.execute("SELECT * from OFFERINGS where id=?", product_id).last
     price += product['price']
   end
-p price
-
-  # look up price of product
-  # db = SQLite3::Database.new("store.db")
-  # db.results_as_hash = true
-  # product = db.execute("SELECT * from OFFERINGS where id=?", product_id).last
-  # price = product['price']
 
   # create the charge
   charge = Stripe::Charge.create(
